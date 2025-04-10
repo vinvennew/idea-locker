@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "Idea Locker",
+    "version": "1.1.2",
+    "description": "Save your ideas as HTML or Markdown files with a date-based directory tree",
+    "permissions": ["storage", "downloads"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon16.png"
+      }
+    },
+    "icons": {
+        "16": "icon16.png",
+        "32": "icon32.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    }
+}

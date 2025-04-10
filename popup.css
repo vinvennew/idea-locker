@@ -1,0 +1,387 @@
+body {
+  width: 400px; /* Keep width for popup consistency */
+  padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa; /* Slightly lighter background */
+  color: #495057; /* Softer text color */
+  box-sizing: border-box;
+  /* Subtle background pattern */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #343a40; /* Darker heading */
+  position: relative;
+  width: 100%; /* Use full width */
+  text-align: center;
+  font-family: "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif; /* More modern font stack */
+  font-weight: 600; /* Slightly bolder */
+  font-size: 20px; /* Slightly larger */
+  letter-spacing: 0.5px; /* Add slight spacing */
+}
+
+#helpButton {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px; /* Slightly smaller */
+  color: #007bff;
+  cursor: pointer;
+  border: 1px solid #007bff;
+  border-radius: 50%;
+  width: 24px; /* Slightly larger */
+  height: 24px;
+  line-height: 22px;
+  text-align: center;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+#helpButton:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-50%) scale(1.1); /* Add scale effect */
+}
+
+#pinButton { /* Style only the detach button now */
+  position: absolute;
+  right: 35px; /* Position next to help button */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  color: #6c757d; /* Gray color */
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  user-select: none; /* Prevent text selection */
+}
+
+.input-container {
+  width: 100%; /* Use full width */
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Slightly more gap */
+  margin-bottom: 20px;
+}
+
+#pasteArea,
+#filenameInput,
+#searchInput,
+#fileType {
+  padding: 12px; /* Slightly more padding */
+  border: 1px solid #ced4da; /* Softer border */
+  border-radius: 8px; /* Increased border-radius */
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  box-sizing: border-box; /* Include padding/border in width */
+  width: 100%; /* Ensure full width */
+}
+
+#pasteArea:focus,
+#filenameInput:focus,
+#searchInput:focus,
+#fileType:focus {
+  border-color: #80bdff; /* Highlight color on focus */
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Subtle glow on focus */
+}
+
+#pasteArea {
+  height: 120px;
+  resize: vertical; /* Allow vertical resize */
+}
+
+#saveButton {
+  padding: 12px 24px; /* Adjusted padding */
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px; /* Increased border-radius */
+  cursor: pointer;
+  font-size: 15px; /* Slightly larger font */
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2); /* Subtle shadow */
+  align-self: flex-end; /* Align button to the right within container if needed */
+}
+
+#saveButton:hover {
+  background-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 86, 179, 0.3); /* Enhanced shadow on hover */
+}
+
+#saveButton:active {
+  transform: scale(0.98); /* Slight shrink on click */
+  background-color: #004085;
+}
+
+#feedback {
+  color: #28a745;
+  margin-bottom: 20px;
+  display: none; /* Initially hidden */
+  opacity: 0; /* Start invisible for transition */
+  transform: translateY(-10px); /* Start slightly up */
+  transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth fade and slide */
+  width: 100%;
+  text-align: center;
+  font-weight: 500;
+}
+
+#feedback.show { /* Class to trigger the animation */
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tree-container {
+  width: 100%; /* Use full width */
+  margin-top: 20px; /* Add some space above the tree */
+}
+
+.folder {
+  margin: 15px 0 5px 0; /* Adjusted margin */
+  font-weight: 600; /* Bolder */
+  color: #5a5a5a; /* Slightly different color */
+  font-size: 15px;
+  position: relative;
+  padding-left: 20px; /* Space for potential icon/lines */
+}
+
+/* Optional: Folder icon (requires an icon font or SVG) */
+/* .folder::before { content: '\f07c'; font-family: FontAwesome; margin-right: 5px; } */
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0 20px; /* Indent file list */
+  position: relative; /* Needed for pseudo-element lines */
+}
+
+/* Vertical line connecting files under a folder */
+.file-list::before {
+  content: "";
+  position: absolute;
+  left: -10px; /* Position left of the list items */
+  top: 0;
+  bottom: 10px; /* Adjust to end nicely */
+  width: 1px;
+  background-color: #ced4da; /* Line color */
+}
+
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 10px 12px; /* Adjusted padding */
+  margin-bottom: 6px; /* Slightly less margin */
+  border: 1px solid #e9ecef; /* Lighter border */
+  border-radius: 8px; /* Increased border-radius */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Softer shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+  position: relative; /* Needed for pseudo-element lines */
+  padding-left: 25px; /* Space for the horizontal line */
+}
+
+/* Horizontal line connecting each file item to the vertical line */
+.file-list li::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%; /* Align vertically center */
+  transform: translateY(-50%);
+  width: 15px; /* Length of the horizontal line */
+  height: 1px;
+  background-color: #ced4da; /* Line color */
+}
+
+.file-list li:hover {
+  background-color: #f8f9fa; /* Subtle background change on hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+}
+
+/* Styling for the latest file indicator */
+.file-list li.latest-file {
+  background-color: #e7f3ff; /* A light blue background */
+  border-left: 3px solid #007bff; /* Add a blue left border */
+  padding-left: 22px; /* Adjust padding to account for border */
+}
+
+.file-list li.latest-file::after { /* Use ::after for the indicator dot */
+  content: "";
+  position: absolute;
+  left: 8px; /* Position near the left edge */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #007bff; /* Blue dot */
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); /* Optional glow */
+}
+
+/* Horizontal line needs adjustment if latest-file border is present */
+.file-list li.latest-file::before {
+  left: -13px; /* Move line further left */
+}
+
+/* Remove the pseudo-element lines for a cleaner look */
+/* We keep the horizontal line ::before, but remove the general ::after */
+/* Commenting out the general rule to avoid conflict */
+/*
+.file-list li::before,
+.file-list li::after {
+  content: none;
+}
+*/
+
+.file-list li span {
+  cursor: pointer;
+  color: #007bff;
+  flex-grow: 1; /* Allow span to take available space */
+  margin-right: 10px; /* Space before delete button */
+  transition: color 0.3s ease;
+}
+
+.file-list li span:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+/* Styles for the inline rename input - REMOVED */
+/*
+.rename-input {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 2px 5px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: inherit; 
+  font-family: inherit;
+  outline: none;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.4); 
+}
+*/
+
+/* General styles for action buttons in the list */
+.file-action-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 14px;
+  margin-left: 5px; /* Space between buttons */
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.file-action-button:hover {
+  transform: scale(1.1);
+}
+
+/* Specific colors */
+.file-list li .open-button {
+  color: #6f42c1; /* Purple color for open */
+}
+.file-list li .open-button:hover {
+  color: #5a32a3; /* Darker purple */
+}
+
+.file-list li .copy-button {
+  color: #28a745; /* Green color for copy */
+}
+.file-list li .copy-button:hover {
+  color: #1e7e34; /* Darker green */
+}
+
+.file-list li .delete-button /* Target delete button by class */ {
+  color: #dc3545;
+}
+.file-list li .delete-button:hover /* Delete button hover */ {
+  color: #a71d2a; /* Darker red on hover */
+}
+
+#instructions {
+  display: none; /* Initially hidden */
+  opacity: 0; /* Start invisible */
+  transform: translate(-50%, -50%) scale(0.95); /* Start slightly smaller */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 360px; /* Slightly wider */
+  max-height: 80vh;
+  padding: 25px;
+  background-color: #fff;
+  border: 1px solid #dee2e6; /* Softer border */
+  border-radius: 10px; /* Increased border-radius */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+  z-index: 1000;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: #343a40; /* Darker text */
+  overflow-y: auto;
+  line-height: 1.6;
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+#instructions.show { /* Class to trigger animation */
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+#instructions strong {
+  color: #007bff;
+  font-weight: 600;
+}
+
+#instructions li {
+  margin: 8px 0; /* More vertical space */
+}
+
+/* --- File Preview Tooltip Styles --- */
+.file-preview-tooltip {
+  position: absolute; /* Use absolute positioning */
+  z-index: 1001; /* Ensure it's above other elements */
+  background-color: #ffffff; /* White background */
+  border: 1px solid #ced4da; /* Subtle border */
+  border-radius: 8px; /* Increased border-radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Soft shadow */
+  padding: 10px 15px; /* Padding */
+  max-width: 350px; /* Limit width */
+  max-height: 250px; /* Limit height */
+  overflow: auto; /* Add scroll if content overflows */
+  font-size: 12px; /* Smaller font size for preview */
+  line-height: 1.4;
+  /* pointer-events: none; Remove this to allow interaction */
+  white-space: normal; /* Allow text wrapping */
+}
+
+.file-preview-tooltip pre {
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap; /* Wrap long lines in pre */
+  word-wrap: break-word; /* Break long words */
+  font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace; /* Monospace font */
+  color: #343a40;
+}
+
+/* Remove styles for path container and original copy button */
+/*
+.tooltip-path-container { ... }
+.tooltip-path-container span { ... }
+.tooltip-copy-button { ... }
+.tooltip-copy-button:hover { ... }
+.tooltip-copy-button:active { ... }
+*/
+
+/* Remove highlight style for copied item */
+/*
+.copied-highlight { ... }
+*/ 

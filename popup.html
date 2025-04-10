@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Idea Locker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <h2>
+    IDEA LOCKER
+    <span id="pinButton" title="Open in new window">&#x29C9;</span>
+    <span id="helpButton">?</span>
+  </h2>
+  <div class="input-container">
+    <textarea id="pasteArea" placeholder="Paste Markdown content here..."></textarea>
+    <input id="filenameInput" type="text" placeholder="Enter filename (default: YYYY-MM-DD-HH-MM-SS)">
+    <select id="fileType">
+      <option value="html">Save as HTML</option>
+      <option value="md">Save as Markdown</option>
+    </select>
+    <button id="saveButton">Save Idea</button>
+    <div id="feedback">Saved successfully!</div>
+    <input id="searchInput" type="text" placeholder="Search saved files...">
+  </div>
+  <div class="tree-container">
+    <div id="tree"></div>
+  </div>
+  <div id="instructions"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
