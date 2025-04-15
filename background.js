@@ -20,7 +20,7 @@
  * 8. 若需要搜索已保存的文件，在搜索框中输入关键词，文件列表会实时更新显示匹配的文件。
  * 9. 若需要删除已保存的文件，在文件列表中找到对应的文件，点击"Delete"按钮即可删除。
  */
-importScripts("node_modules/markdown-it/dist/markdown-it.min.js");
+importScripts("lib/markdown-it.min.js");
 
 console.log("Background script loaded");
 
@@ -35,7 +35,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const fileType = message.fileType || "html";
     const baseFilename = message.customFilename || `${dateStr}-${timeStr}`;
     const filename = `${baseFilename}.${fileType}`;
-    const fullPath = `${dateStr}/${filename}`;
+    const fullPath = filename;
     const fileTitle = markdown.split("\n")[0].replace(/^#+/, "").trim() || "Untitled";
     const saveTimestamp = Date.now(); 
 

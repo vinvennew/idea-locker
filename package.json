@@ -1,5 +1,12 @@
 {
   "dependencies": {
     "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.99.5",
+    "webpack-cli": "^6.0.1"
+  },
+  "scripts": {
+    "build": "webpack --entry ./popup.js --mode production"
   }
 }
